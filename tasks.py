@@ -109,11 +109,13 @@ print(word_frequencies_more_than_once)
 # -----------------------------------------------
 def token_counts(string: str, k: int = 1) -> dict:
     # Get the tokens from the string
+    def tokenize3(string: str) -> list:
+        tokens = [''.join([char for char in word.lower() if char  in '\n\t abcdefghijklmnopqrstuvwxyz0123456789']) for word in string.split()]
+        return tokens
     tokens = tokenize3(string)
-    # Create a dictionary comprehension to count the frequency of each word
     word_frequencies = {word: tokens.count(word) for word in tokens}
     # Filter the dictionary to include only words that occur more than k times
-    filtered_word_frequencies = {word: count for word, count in word_frequencies.items() if count > k}
+    filtered_word_frequencies = {word: count for word, count in word_frequencies.items() if count >= k}
     return filtered_word_frequencies
 # -----------------------------------------------
 
