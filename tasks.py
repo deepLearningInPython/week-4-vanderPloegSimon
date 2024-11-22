@@ -28,10 +28,7 @@ import numpy as np
 # -----------------------------------------------
 text = "The quick brown fox jumps over the lazy dog!"
 
-# Write a list comprehension to tokenize the text and remove punctuation
-punctuation_marks = ['.', ',', '!', '?', ';', ':', "'", '"']
-
-tokens = [''.join([char for char in word if char not in punctuation_marks]) for word in text.split()]
+tokens = [''.join([char for char in word if char in '\n\t ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789']) for word in text.split()]
 
 # Expected output: ['The', 'quick', 'brown', 'fox', 'jumps', 'over', 'the', 'lazy', 'dog']
 print(tokens)
@@ -47,9 +44,8 @@ print(tokens)
 # Your code here:
 # -----------------------------------------------
 def tokenize(string: str) -> list:
-    punctuation_marks = ['.', ',', '!', '?', ';', ':', "'", '"']
-    # Remove punctuation and convert tokens to lowercase
-    tokens = [''.join([char for char in word if char not in punctuation_marks]).lower() for word in string.split()]
+
+    tokens = [''.join([char for char in word.lower() if char  in '\n\t abcdefghijklmnopqrstuvwxyz0123456789']).lower() for word in string.split()]
     # Get unique words and sort them alphabetically
     unique_tokens = sorted(set(tokens))
     return unique_tokens
@@ -84,6 +80,15 @@ print(tokenize(text))
 
 # Your code here:
 # -----------------------------------------------
+def tokenize3(string: str) -> list:
+
+    tokens = [''.join([char for char in word.lower() if char  in '\n\t abcdefghijklmnopqrstuvwxyz0123456789']) for word in string.split()]
+    # Get unique words and sort them alphabetically
+    unique_tokens = sorted(set(tokens))
+    return tokens
+
+tokens = tokenize3(text)
+
 word_frequencies = {word: tokens.count(word) for word in tokens}
 
 # Expected output example: {'the': 2, 'quick': 1, ...}
@@ -104,15 +109,12 @@ print(word_frequencies_more_than_once)
 # -----------------------------------------------
 def token_counts(string: str, k: int = 1) -> dict:
     # Get the tokens from the string
-    tokens = tokenize(string)
+    tokens = tokenize3(string)
     # Create a dictionary comprehension to count the frequency of each word
     word_frequencies = {word: tokens.count(word) for word in tokens}
     # Filter the dictionary to include only words that occur more than k times
     filtered_word_frequencies = {word: count for word, count in word_frequencies.items() if count > k}
     return filtered_word_frequencies
-# test:
-text_hist = {'the': 2, 'quick': 1, 'brown': 1, 'fox': 1, 'jumps': 1, 'over': 1, 'lazy': 1, 'dog': 1}
-all(text_hist[key] == value for key, value in token_counts(text).items())
 # -----------------------------------------------
 
 
