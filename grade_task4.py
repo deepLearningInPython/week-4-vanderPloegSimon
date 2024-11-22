@@ -1,4 +1,4 @@
-from tasks import tokenize, tokenize3,token_counts
+from tasks import *
 
 def test_token_counts():
     text = """The quick brown fox jumps over the lazy dog. The fox and the dog play together. 
