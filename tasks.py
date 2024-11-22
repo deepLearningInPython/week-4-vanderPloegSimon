@@ -28,6 +28,7 @@ import numpy as np
 # -----------------------------------------------
 text = "The quick brown fox jumps over the lazy dog!"
 
+# Write a list comprehension to tokenize the text and remove punctuation
 tokens = [''.join([char for char in word if char in '\n\t ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789']) for word in text.split()]
 
 # Expected output: ['The', 'quick', 'brown', 'fox', 'jumps', 'over', 'the', 'lazy', 'dog']
@@ -45,14 +46,9 @@ print(tokens)
 # -----------------------------------------------
 def tokenize(string: str) -> list:
     # Convert the string to lowercase, remove unwanted characters, and split into words
-    cleaned_string = ''.join([x for x in string.lower() if x in '\n\t abcdefghijklmnopqrstuvwxyz0123456789'])
-    tokens = cleaned_string.split()
+    cleaned_string = ''.join([x for x in string.lower() if x in ' \n\tabcdefghijklmnopqrstuvwxyz0123456789'])
+    tokens = [token for token in cleaned_string.split() if token]  # Filter out empty tokens
     return tokens
-
-# Test the function
-text = "The quick brown fox jumps over the lazy dog! The quick brown fox is very quick."
-print(tokenize(text))
-
 # -----------------------------------------------
 
 
@@ -79,15 +75,6 @@ print(tokenize(text))
 
 # Your code here:
 # -----------------------------------------------
-def tokenize3(string: str) -> list:
-
-    tokens = [''.join([char for char in word.lower() if char  in '\n\t abcdefghijklmnopqrstuvwxyz0123456789']) for word in string.split()]
-    # Get unique words and sort them alphabetically
-    unique_tokens = sorted(set(tokens))
-    return tokens
-
-tokens = tokenize3(text)
-
 word_frequencies = {word: tokens.count(word) for word in tokens}
 
 # Expected output example: {'the': 2, 'quick': 1, ...}
@@ -99,6 +86,8 @@ word_frequencies_more_than_once = {word: count for word, count in word_frequenci
 
 # Print words that appear more than once
 print(word_frequencies_more_than_once)
+# -----------------------------------------------
+
 
 
 # Task 4: Define a function that takes a string and an integer k, and returns a dictionary with
@@ -106,12 +95,10 @@ print(word_frequencies_more_than_once)
 
 # Your code here:
 # -----------------------------------------------
+# -----------------------------------------------
 def token_counts(string: str, k: int = 1) -> dict:
     # Get the tokens from the string
-    def tokenize3(string: str) -> list:
-        tokens = [''.join([char for char in word.lower() if char  in '\n\t abcdefghijklmnopqrstuvwxyz0123456789']) for word in string.split()]
-        return tokens
-    tokens = tokenize3(string)
+    tokens = tokenize(string)
     word_frequencies = {word: tokens.count(word) for word in tokens}
     # Filter the dictionary to include only words that occur more than k times
     filtered_word_frequencies = {word: count for word, count in word_frequencies.items() if count >= k}
@@ -142,14 +129,14 @@ def token_counts(string: str, k: int = 1) -> dict:
 
 # Your code here:
 # -----------------------------------------------
+# Get unique tokens and sort them for consistent ordering
+unique_tokens = sorted(set(tokens))
+
+# Create the mapping from token to ID using dictionary comprehension
 token_to_id = {token: idx for idx, token in enumerate(unique_tokens)}
 
-# Create the `id_to_token` dictionary: each unique ID is mapped back to the corresponding token
+# Create the mapping from ID to token using dictionary comprehension
 id_to_token = {idx: token for token, idx in token_to_id.items()}
-
-# Print the dictionaries
-print("Token to ID mapping:", token_to_id)
-print("ID to Token mapping:", id_to_token)
 # -----------------------------------------------
 
 
