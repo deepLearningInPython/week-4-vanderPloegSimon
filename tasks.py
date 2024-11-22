@@ -44,11 +44,10 @@ print(tokens)
 # Your code here:
 # -----------------------------------------------
 def tokenize(string: str) -> list:
-
-    tokens = [''.join([char for char in word.lower() if char  in '\n\t abcdefghijklmnopqrstuvwxyz0123456789']).lower() for word in string.split()]
-    # Get unique words and sort them alphabetically
-    unique_tokens = sorted(set(tokens))
-    return unique_tokens
+    # Convert the string to lowercase, remove unwanted characters, and split into words
+    cleaned_string = ''.join([x for x in string.lower() if x in '\n\t abcdefghijklmnopqrstuvwxyz0123456789'])
+    tokens = cleaned_string.split()
+    return tokens
 
 # Test the function
 text = "The quick brown fox jumps over the lazy dog! The quick brown fox is very quick."
